@@ -1,0 +1,74 @@
+services:
+  db:
+    image: postgres:16
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: system_dashboard
+      POSTGRES_USER: jaecheol
+      POSTGRES_PASSWORD: jaecheolpass
+    networks:
+      - app-network
+
+  backend:
+    build: ./backend
+    command: gunicorn backend.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./backend:/usr/src/app
+      - static_volume:/usr/src/app/static
+      - media_volume:/usr/src/app/media
+    ports:
+      - 8000:8000
+    environment:
+      - DJANGO_SETTINGS_MODULE=backend.settings
+    depends_on:
+      - db
+    networks:
+      - app-network
+  
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - backend
+    command: npm start
+    networks:
+      - app-network
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    volumes:
+      - static_volume:/usr/src/app/static
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:
+
+networks:
+  app-network:  # Define the custom network
+    driver: bridge
+
+# The app-network in the docker-compose.yml is a custom Docker network that allows your services (e.g., frontend, backend, and nginx) to communicate with each other using their service names.
+
+# Why Use a Custom Network?
+# By default, Docker creates an isolated environment for each container, but when services are part of the same network, they can resolve each other by name (using the service names defined in the docker-compose.yml). This enables containers to talk to each other internally without exposing ports to the host machine.
+
+# How Does It Work?
+# networks: block: In the docker-compose.yml, the networks section defines a custom network (in this case, app-network). You can name this network anything you'd like.
+
+# Connecting Services: By adding networks: - app-network under each service, Docker connects those services to the custom network, allowing them to communicate using their service names (frontend, backend, etc.) instead of IP addresses.
