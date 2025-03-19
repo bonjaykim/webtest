@@ -5,6 +5,7 @@ export interface AnimalItem {
     habitat: string
     conservation: string
     population: string
+    done: boolean
   }
   
   // 최종 노드(국가)에 대한 인터페이스
@@ -38,3 +39,5 @@ export interface AnimalItem {
   
   // 편집 중인 데이터 타입
   export type EditData = Partial<AnimalItem>
+  
+  
