@@ -1,5 +1,11 @@
+import Link from 'next/link'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Table,
+  FolderTree,
+  LayoutDashboard
+} from "lucide-react"
 
 export default function Home() {
   return (
@@ -9,48 +15,55 @@ export default function Home() {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Card>
           <CardHeader>
-            <CardTitle>Welcome</CardTitle>
-            <CardDescription>This is a basic shadcn/ui card component</CardDescription>
+            <div className="flex items-center gap-2">
+              <LayoutDashboard className="h-5 w-5 text-primary" />
+              <CardTitle>대시보드</CardTitle>
+            </div>
+            <CardDescription>다양한 대시보드 예제</CardDescription>
           </CardHeader>
           <CardContent>
-            <p>You can customize this card with your own content.</p>
+            <p>팀, 데이터 대시보드 등 다양한 예제 제공</p>
           </CardContent>
           <CardFooter>
-            <Button>Get Started</Button>
+            <Link href="/dashboard">
+              <Button>대시보드 보기</Button>
+            </Link>
           </CardFooter>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>Features</CardTitle>
-            <CardDescription>What makes shadcn/ui great</CardDescription>
+            <div className="flex items-center gap-2">
+              <Table className="h-5 w-5 text-primary" />
+              <CardTitle>프로젝트 테이블</CardTitle>
+            </div>
+            <CardDescription>프로젝트 관리 테이블</CardDescription>
           </CardHeader>
           <CardContent>
-            <ul className="list-disc pl-5 space-y-2">
-              <li>Beautifully designed components</li>
-              <li>Built with Tailwind CSS</li>
-              <li>Accessible and customizable</li>
-              <li>Copy and paste into your projects</li>
-            </ul>
+            <p>프로젝트 목록 및 상세 정보 보기</p>
           </CardContent>
           <CardFooter>
-            <Button variant="outline">Learn More</Button>
+            <Link href="/demo/view">
+              <Button>프로젝트 테이블 보기</Button>
+            </Link>
           </CardFooter>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>Get Started</CardTitle>
-            <CardDescription>Add more components to your project</CardDescription>
+            <div className="flex items-center gap-2">
+              <FolderTree className="h-5 w-5 text-primary" />
+              <CardTitle>트리 테이블</CardTitle>
+            </div>
+            <CardDescription>트리 형태의 테이블 구조</CardDescription>
           </CardHeader>
           <CardContent>
-            <p>Use the CLI to add more components:</p>
-            <pre className="bg-muted p-2 rounded-md mt-2 text-sm overflow-x-auto">
-              npx shadcn@latest add dropdown-menu
-            </pre>
+            <p>계층 구조로 정리된 데이터 테이블</p>
           </CardContent>
           <CardFooter>
-            <Button variant="secondary">View Docs</Button>
+            <Link href="/table/tree-table">
+              <Button>트리 테이블 보기</Button>
+            </Link>
           </CardFooter>
         </Card>
       </div>

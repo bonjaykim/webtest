@@ -1,0 +1,7 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+1. typescript 에 build error 가 나지 않도록 any 는 사용하지말아줘
+
